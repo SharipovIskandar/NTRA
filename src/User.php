@@ -18,26 +18,27 @@ class User
     {
         $this->pdo = DB::connect();
     }
+
     public function create(string $username,
                            string $position,
                            string $gender,
                            string $phone): bool|array
     {
-                $query = "INSERT INTO users (username, position, gender, phone, created_at) 
+        $query = "INSERT INTO users (username, position, gender, phone, created_at) 
                           VALUES (:username, :position, :gender, :phone, NOW())";
 
-                $stmt = $this->pdo->prepare($query);
-                $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':position', $position);
-                $stmt->bindParam(':gender', $gender);
-                $stmt->bindParam(':phone', $phone);
-                $stmt->execute();
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':position', $position);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->execute();
 
-                return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function updateUser(
-        int $id,
+        int    $id,
         string $username,
         string $position,
         string $gender,
@@ -60,6 +61,43 @@ class User
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
+    }
+    public function createUser()
+    {
+        if (isset($_POST['email']) && isset($_POST['password'])) {
+            $email    = $_POST['email'];
+            $password = $_POST['password'];
+
+            $db   = DB::connect();
+            $stmt = $db->prepare("INSERT INTO users (email, password) VALUES (:email, :password)");
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $password);
+            $stmt->execute();
+
+            $stmt = $db->prepare("SELECT * FROM users where email = :email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+//            echo $result ? 'New record created successfully' : 'Something went wrong';
+        }
+        return null;
+    }
+    public function loginUser()
+    {
+        if (isset($_POST['email']) && isset($_POST['password']))
+        {
+            $email    = $_POST['email'];
+            $password = $_POST['password'];
+            $db   = DB::connect();
+            $stmt = $db->prepare("SELECT * FROM users WHERE email = :email and password = :password");
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $password);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            $_SESSION['user'] = $email;
+            echo $row ? header("Location: /") : 'Something went wrong';
+
+        }
     }
 
 }
