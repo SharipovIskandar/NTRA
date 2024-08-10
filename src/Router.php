@@ -21,12 +21,10 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['REQUEST_URI'];
 
-        // Remove query parameters from the path
         if (strpos($path, '?') !== false) {
             $path = strstr($path, '?', true);
         }
 
-        // Check if the route exists
         if (array_key_exists($path, $this->routes[$method] ?? [])) {
             $this->routes[$method][$path]();
         } else {

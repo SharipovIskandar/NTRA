@@ -16,9 +16,42 @@
 
     <form action="/createAcc" method="POST" class="space-y-6">
         <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+            <label for="userName" class="block text-sm font-medium text-gray-700">User Name</label>
             <div class="mt-1">
-                <input id="name" name="name" type="text" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <input id="userName" name="userName" type="text" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+        </div>
+
+        <div>
+            <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
+            <div class="mt-1">
+                <input id="position" name="position" type="text" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+        </div>
+
+        <div>
+            <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+            <div class="mt-1">
+                <input id="gender" name="gender" type="text" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+        </div>
+
+        <div class="relative">
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+            <div class="relative">
+                <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        class="block w-full pl-20 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        value="+998"
+                        onfocus="if(this.value === '+998') this.value = '';"
+                        onblur="if(this.value === '') this.value = '+998';"
+                />
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                +998
+            </span>
             </div>
         </div>
 

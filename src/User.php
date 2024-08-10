@@ -64,19 +64,38 @@ class User
     }
     public function createUser()
     {
-        if (isset($_POST['email']) && isset($_POST['password'])) {
+        if (isset($_POST['userName']) && isset($_POST['position']) && isset($_POST['gender']) && isset($_POST['phone']) && isset($_POST['email']) && isset($_POST['password'])) {
+            $userName = $_POST['userName'];
+            $position = $_POST['position'];
+            $gender = $_POST['gender'];
+            $phone = $_POST['phone'];
             $email    = $_POST['email'];
             $password = $_POST['password'];
 
-            $stmt = $this->pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :password)");
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', password_hash($password, PASSWORD_BCRYPT)); // Parolni xashlash
-            $stmt->execute();
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            header("Location: /login"); // Yaratilgandan keyin tizimga kirish sahifasiga yo'naltirish
-            exit();
+            $query = "INSERT INTO users (username, position, gender, phone, email, password, created_at) VALUES (:username, :position, :gender, :phone, :email, :password, NOW())";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(':username', $userName);
+            $stmt->bindParam(':position', $position);
+            $stmt->bindParam(':gender', $gender);
+            $stmt->bindParam(':phone', $phone);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashedPassword);
+
+            if ($stmt->execute()) {
+                header("Location: /login");
+                exit();
+            } else {
+                echo "Failed to insert user.";
+            }
+        } else {
+            echo "Required fields are missing.";
         }
     }
+
+
+
     public function loginUser()
     {
         if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -88,9 +107,9 @@ class User
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) { // Parolni tekshirish
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = $email;
-                header("Location: /"); // Tizimga kirish muvaffaqiyatli bo'lsa, bosh sahifaga yo'naltirish
+                header("Location: /");
                 exit();
             } else {
                 echo 'Invalid credentials';
@@ -101,7 +120,6 @@ class User
     {
         if (isset($_POST['email'])) {
             $email = $_POST['email'];
-            // Parolni tiklash funksiyasini qo'shing
             echo "Password reset functionality not implemented yet.";
         }
     }

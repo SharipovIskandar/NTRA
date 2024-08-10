@@ -12,9 +12,11 @@ $router->get("/createAcc", function() {
     require __DIR__ . '/../view/createAccount.php';
 });
 
+// src/Router.php
 $router->post("/createAcc", function() {
     (new User())->createUser();
 });
+
 
 $router->get("/login", function() {
     require __DIR__ . '/index.html';
@@ -32,5 +34,4 @@ $router->post("/forgetPass", function() {
     (new User())->resetPassword();
 });
 
-// Resolve the current route
 $router->resolve();
