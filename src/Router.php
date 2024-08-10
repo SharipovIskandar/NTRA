@@ -4,24 +4,33 @@ namespace App;
 
 class Router
 {
-    private object|null $updates;
+    private array $routes = [];
 
-    public function __construct()
-    {
-        $this->updates = json_decode(file_get_contents('php://input'));
-    }
     public function get(string $path, \Closure $callback): void
     {
-        if($_SERVER["REQUEST_METHOD"] === "GET" && $_SERVER["REQUEST_URI"] === $path)
-        {
-            $callback();
-        }
+        $this->routes['GET'][$path] = $callback;
     }
-    public function post($path, $callback): void
+
+    public function post(string $path, \Closure $callback): void
     {
-        if($_SERVER["REQUEST_METHOD"] === "POST" && $_SERVER["REQUEST_URI"] === $path)
-        {
-            $callback();
+        $this->routes['POST'][$path] = $callback;
+    }
+
+    public function resolve(): void
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        $path = $_SERVER['REQUEST_URI'];
+
+        // Remove query parameters from the path
+        if (strpos($path, '?') !== false) {
+            $path = strstr($path, '?', true);
+        }
+
+        // Check if the route exists
+        if (array_key_exists($path, $this->routes[$method] ?? [])) {
+            $this->routes[$method][$path]();
+        } else {
+            echo "404 Not Found";
         }
     }
 }

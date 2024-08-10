@@ -30,7 +30,7 @@
     </form>
 
     <div class="text-center mt-6">
-        <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">Remember your password? Sign in</a>
+        <a href="/login" class="text-sm text-indigo-600 hover:text-indigo-500">Remember your password? Sign in</a>
     </div>
 </div>
 

@@ -68,35 +68,41 @@ class User
             $email    = $_POST['email'];
             $password = $_POST['password'];
 
-            $db   = DB::connect();
-            $stmt = $db->prepare("INSERT INTO users (email, password) VALUES (:email, :password)");
+            $stmt = $this->pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :password)");
             $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $password);
+            $stmt->bindParam(':password', password_hash($password, PASSWORD_BCRYPT)); // Parolni xashlash
             $stmt->execute();
 
-            $stmt = $db->prepare("SELECT * FROM users where email = :email");
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-//            echo $result ? 'New record created successfully' : 'Something went wrong';
+            header("Location: /login"); // Yaratilgandan keyin tizimga kirish sahifasiga yo'naltirish
+            exit();
         }
-        return null;
     }
     public function loginUser()
     {
-        if (isset($_POST['email']) && isset($_POST['password']))
-        {
+        if (isset($_POST['email']) && isset($_POST['password'])) {
             $email    = $_POST['email'];
             $password = $_POST['password'];
-            $db   = DB::connect();
-            $stmt = $db->prepare("SELECT * FROM users WHERE email = :email and password = :password");
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $password);
-            $stmt->execute();
-            $row = $stmt->fetch();
-            $_SESSION['user'] = $email;
-            echo $row ? header("Location: /") : 'Something went wrong';
 
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) { // Parolni tekshirish
+                $_SESSION['user'] = $email;
+                header("Location: /"); // Tizimga kirish muvaffaqiyatli bo'lsa, bosh sahifaga yo'naltirish
+                exit();
+            } else {
+                echo 'Invalid credentials';
+            }
+        }
+    }
+    public function resetPassword()
+    {
+        if (isset($_POST['email'])) {
+            $email = $_POST['email'];
+            // Parolni tiklash funksiyasini qo'shing
+            echo "Password reset functionality not implemented yet.";
         }
     }
 
