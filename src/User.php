@@ -72,7 +72,6 @@ class User
             $email    = $_POST['email'];
             $password = $_POST['password'];
 
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             $query = "INSERT INTO users (username, position, gender, phone, email, password, created_at) VALUES (:username, :position, :gender, :phone, :email, :password, NOW())";
             $stmt = $this->pdo->prepare($query);
@@ -81,14 +80,14 @@ class User
             $stmt->bindParam(':gender', $gender);
             $stmt->bindParam(':phone', $phone);
             $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':password', $password);
 
             if ($stmt->execute()) {
                 header("Location: /login");
                 exit();
-            } else {
-                echo "Failed to insert user.";
             }
+
+            echo "Failed to insert user.";
         } else {
             echo "Required fields are missing.";
         }
@@ -107,7 +106,7 @@ class User
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && $user['password']) {
                 $_SESSION['user'] = $email;
                 header("Location: /");
                 exit();

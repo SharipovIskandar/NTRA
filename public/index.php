@@ -7,9 +7,16 @@ use App\User;
 
 $router = new Router();
 
+$router->get("/dashboard", function() {
+    require __DIR__ . '/../view/adminDashboard.php';
+});
+
+$router->get("/", function() {
+    require __DIR__ . '/index.html';
+});
 
 $router->get("/createAcc", function() {
-    require __DIR__ . '/../view/createAccount.php';
+    require __DIR__ . '/../view/auth/createAccount.php';
 });
 
 // src/Router.php
@@ -27,7 +34,7 @@ $router->post("/login", function() {
 });
 
 $router->get("/forgetPass", function() {
-    require __DIR__ . '/../view/forgetPassword.php';
+    require __DIR__ . '/../view/auth/forgetPassword.php';
 });
 
 $router->post("/forgetPass", function() {
