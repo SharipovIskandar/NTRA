@@ -14,11 +14,22 @@ class Ads
         $this->pdo = DB::connect();
     }
 
-    public function addAds(): array|bool
+    public function addAds(): void
     {
-        if(isset($_POST['title']) && isset($_POST['description']) && isset($_POST['address']) && isset($_POST['rooms']) && isset($_POST['price'])) {
+        if (isset($_POST['title']) &&
+            isset($_POST['description']) &&
+            isset($_POST['userId']) &&
+            isset($_POST['branchId']) &&
+            isset($_POST['statusId']) &&
+            isset($_POST['address']) &&
+            isset($_POST['rooms']) &&
+            isset($_POST['price'])) {
+
             $title = $_POST['title'];
             $description = $_POST['description'];
+            $userId = $_POST['userId'];
+            $branchId = $_POST['branchId'];
+            $statusId = $_POST['statusId'];
             $address = $_POST['address'];
             $rooms = $_POST['rooms'];
             $price = $_POST['price'];
@@ -28,15 +39,15 @@ class Ads
             $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->bindParam(':status_id', $status_id);
-            $stmt->bindParam(':branch_id', $branch_id);
+            $stmt->bindParam(':user_id', $userId);
+            $stmt->bindParam(':status_id', $statusId);
+            $stmt->bindParam(':branch_id', $branchId);
             $stmt->bindParam(':address', $address);
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':rooms', $rooms);
             $stmt->execute();
+            header("location: /adsDashboard");
         }
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function updateAds(string $title,
@@ -80,7 +91,6 @@ class Ads
 
         return $this->pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
 
 }

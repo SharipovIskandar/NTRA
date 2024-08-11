@@ -22,7 +22,7 @@ $posts = $post->showPosts();
 <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-white font-bold text-lg">Home</a>
-        <a href="/createAds" class="text-white font-bold text-lg">Create New Ad</a>
+        <a href="/createAdsPage" class="text-white font-bold text-lg">Create New Ad</a>
     </div>
 </nav>
 

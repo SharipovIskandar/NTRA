@@ -4,11 +4,17 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Router;
 use App\User;
+use App\Ads;
+
 
 $router = new Router();
 
-$router->get("/createAds", function() {
-    require __DIR__ . '/../view/adminDashboard.php';
+$router->get("/createAdsPage", function() {
+    require __DIR__ . '/../view/createAds.php';
+});
+
+$router->post("/createAdsPage", function() {
+    (new Ads())->addAds();
 });
 
 $router->get("/", function() {

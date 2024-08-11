@@ -29,16 +29,10 @@ try {
     <!-- Link with "<-" symbol -->
     <a href="/adsDashboard" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"><-</a>
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Ad</h1>
-    <form class="bg-white p-6 rounded-lg shadow-lg" action="/createAds">
-        <div class="mb-4">
-            <label for="title" class="block text-gray-700 font-bold mb-2">Ad Title</label>
-            <input type="text" name="title" id="title" placeholder="Enter Ad Title" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
-        </div>
-        <div class="mb-4">
-            <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-            <textarea id="description" name="description" placeholder="Enter Description" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"></textarea>
-        </div>
-        <div class="container mx-auto mt-8">
+    <form class="bg-white p-6 rounded-lg shadow-lg" action="/createAdsPage" method="post">
+
+
+    <div class="container mx-auto mt-8">
             <h1 class="text-2xl font-bold mb-4">Branch</h1>
             <table class="min-w-full bg-white border border-gray-300">
                 <thead class="bg-gray-200">
@@ -81,8 +75,33 @@ try {
         </div>
 
         <div class="mb-4">
+            <label for="title" class="block text-gray-700 font-bold mb-2">Ad Title</label>
+            <input type="text" name="title" id="title" placeholder="Enter Ad Title" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
+            <textarea id="description" name="description" placeholder="Enter Description" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"></textarea>
+        </div>
+
+
+        <div class="mb-4">
             <label for="image" class="block text-gray-700 font-bold mb-2">Ad Image</label>
             <input type="file" id="image" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="user_id" class="block text-gray-700 font-bold mb-2">User Id</label>
+            <input type="number" name="userId" id="user_id" placeholder="Rooms Count" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="branch_id" class="block text-gray-700 font-bold mb-2">Branch Id</label>
+            <input type="number" name="branchId" id="branch_id" placeholder="Rooms Count" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="status_id" class="block text-gray-700 font-bold mb-2">Set Status</label>
+            <input type="number" name="statusId" id="status_id" placeholder="Rooms Count" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
         </div>
 
         <div class="mb-4">
