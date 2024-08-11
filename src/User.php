@@ -108,7 +108,7 @@ class User
 
             if ($user && $user['password']) {
                 $_SESSION['user'] = $email;
-                header("Location: /");
+                header("Location: /adsDashboard");
                 exit();
             } else {
                 echo 'Invalid credentials';

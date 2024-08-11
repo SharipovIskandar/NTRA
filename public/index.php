@@ -7,7 +7,7 @@ use App\User;
 
 $router = new Router();
 
-$router->get("/dashboard", function() {
+$router->get("/createAds", function() {
     require __DIR__ . '/../view/adminDashboard.php';
 });
 
@@ -27,6 +27,10 @@ $router->post("/createAcc", function() {
 
 $router->get("/login", function() {
     require __DIR__ . '/index.html';
+});
+
+$router->get("/adsDashboard", function() {
+    require __DIR__ . '/../view/adsDashboard.php';
 });
 
 $router->post("/login", function() {
