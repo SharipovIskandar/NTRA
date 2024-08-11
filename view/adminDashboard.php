@@ -1,7 +1,7 @@
 <?php
 
 use App\DB;
-use PDO;
+
 try {
     $pdo = DB::connect();
 
@@ -27,7 +27,7 @@ try {
 <body class="bg-gray-100">
 <div class="container mx-auto p-8">
     <!-- Link with "<-" symbol -->
-    <a href="/adsDashboard" class="text-gray-600 text-xl mb-4 inline-block"><-</a>
+    <a href="/adsDashboard" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"><-</a>
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Ad</h1>
     <form class="bg-white p-6 rounded-lg shadow-lg" action="/createAds">
         <div class="mb-4">
@@ -98,7 +98,7 @@ try {
         </div>
 
         <div class="mb-4">
-            <label for="prince" class="block text-gray-700 font-bold mb-2">Price</label>
+            <label for="prince" class="block text-gray-700 font-bold mb-2">Price at $</label>
             <input type="number" name="price" id="prince" placeholder="Enter Price" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
         </div>
         <div class="flex justify-end">

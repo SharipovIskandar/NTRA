@@ -1,29 +1,12 @@
 <?php
 
 use App\DB;
+use App\Ads;
 use PDO;
 
-try {
-    $pdo = DB::connect();
+$post = new Ads();
+$posts = $post->showPosts();
 
-    $query = "
-        SELECT 
-            ads.id, ads.title, ads.description, ads.address, ads.price, ads.rooms, ads.created_at,
-            users.username AS user_name,
-            branch.address AS branch_address,
-            status.name AS status_name
-        FROM ads
-        JOIN users ON ads.user_id = users.id
-        JOIN branch ON ads.branch_id = branch.id
-        JOIN status ON ads.status_id = status.id
-    ";
-
-    $stmt = $pdo->query($query);
-    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "Connection Error: " . $e->getMessage();
-}
 ?>
 
 <!DOCTYPE html>

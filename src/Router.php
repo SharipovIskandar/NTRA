@@ -28,7 +28,7 @@ class Router
         if (array_key_exists($path, $this->routes[$method] ?? [])) {
             $this->routes[$method][$path]();
         } else {
-            echo "404 Not Found";
+            require __DIR__ . '/../view/404NotFounded.php';
         }
     }
 }

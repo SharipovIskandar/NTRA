@@ -64,6 +64,23 @@ class Ads
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function showPosts()
+    {
+        $query = "
+        SELECT 
+            ads.id, ads.title, ads.description, ads.address, ads.price, ads.rooms, ads.created_at,
+            users.username AS user_name,
+            branch.address AS branch_address,
+            status.name AS status_name
+        FROM ads
+        JOIN users ON ads.user_id = users.id
+        JOIN branch ON ads.branch_id = branch.id
+        JOIN status ON ads.status_id = status.id
+    ";
+
+        return $this->pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
 
 }
