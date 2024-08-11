@@ -12,7 +12,7 @@ try {
     $statuses = $stmt_status->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    echo "Bog'lanishda xato: " . $e->getMessage();
+    echo "Connection Error: " . $e->getMessage();
 }
 ?>
 
@@ -26,8 +26,10 @@ try {
 </head>
 <body class="bg-gray-100">
 <div class="container mx-auto p-8">
+    <!-- Link with "<-" symbol -->
+    <a href="/adsDashboard" class="text-gray-600 text-xl mb-4 inline-block"><-</a>
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Create New Ad</h1>
-    <form class="bg-white p-6 rounded-lg shadow-lg" action="/dashboard">
+    <form class="bg-white p-6 rounded-lg shadow-lg" action="/createAds">
         <div class="mb-4">
             <label for="title" class="block text-gray-700 font-bold mb-2">Ad Title</label>
             <input type="text" name="title" id="title" placeholder="Enter Ad Title" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">

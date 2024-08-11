@@ -1,91 +1,85 @@
+<?php
+
+use App\DB;
+use PDO;
+
+try {
+    $pdo = DB::connect();
+
+    $query = "
+        SELECT 
+            ads.id, ads.title, ads.description, ads.address, ads.price, ads.rooms, ads.created_at,
+            users.username AS user_name,
+            branch.address AS branch_address,
+            status.name AS status_name
+        FROM ads
+        JOIN users ON ads.user_id = users.id
+        JOIN branch ON ads.branch_id = branch.id
+        JOIN status ON ads.status_id = status.id
+    ";
+
+    $stmt = $pdo->query($query);
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection Error: " . $e->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Posts</title>
+    <title>All Ads</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-
 <body class="bg-gray-100">
 <!-- Navbar -->
-<nav class="bg-blue-500 p-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="#" class="text-white text-xl font-bold">All Posts</a>
-        <div>
-            <a href="/" class="text-white px-4">Home</a>
-            <a href="/createAds" class="text-white px-4">Create Post</a>
-            <a href="" class="text-white px-4">About</a>
-        </div>
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-white font-bold text-lg">Home</a>
+        <a href="/createAds" class="text-white font-bold text-lg">Create New Ad</a>
     </div>
 </nav>
 
-<!-- Search and Filter -->
-<div class="max-w-7xl mx-auto mt-6">
-    <div class="flex justify-between items-center mb-6">
-        <!-- Search Bar -->
-        <div class="w-full md:w-1/2">
-            <input type="text" placeholder="Search posts..." class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        </div>
-        <!-- Filters -->
-        <div class="w-full md:w-1/2 flex justify-end">
-            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                <option value="">Filter by Category</option>
-                <option value="electronics">Electronics</option>
-                <option value="vehicles">Vehicles</option>
-                <option value="real-estate">Real Estate</option>
-                <option value="services">Services</option>
-                <option value="jobs">Jobs</option>
-                <option value="others">Others</option>
-            </select>
-        </div>
+<div class="container mx-auto p-8">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">All Ads</h1>
+
+    <!-- Filter & Search -->
+    <div class="mb-6">
+        <input type="text" placeholder="Search by title..." class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
     </div>
 
-    <!-- Posts List -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Post 1 -->
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-            <img src="https://via.placeholder.com/150" alt="Post Image" class="w-full h-48 object-cover rounded-t-lg">
-            <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">Post Title 1</h2>
-                <p class="text-gray-700">Short description of the post goes here...</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-gray-900 font-bold">$100</span>
-                    <a href="#" class="text-blue-500 hover:underline">View Details</a>
+    <div class="grid grid-cols-1 gap-6">
+        <?php foreach ($posts as $post): ?>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($post['title']); ?></h2>
+                <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($post['description']); ?></p>
+                <div class="text-gray-700 mb-2">
+                    <strong>User:</strong> <?php echo htmlspecialchars($post['user_name']); ?>
+                </div>
+                <div class="text-gray-700 mb-2">
+                    <strong>Branch:</strong> <?php echo htmlspecialchars($post['branch_address']); ?>
+                </div>
+                <div class="text-gray-700 mb-2">
+                    <strong>Status:</strong> <?php echo htmlspecialchars($post['status_name']); ?>
+                </div>
+                <div class="text-gray-700 mb-2">
+                    <strong>Address:</strong> <?php echo htmlspecialchars($post['address']); ?>
+                </div>
+                <div class="text-gray-700 mb-2">
+                    <strong>Price:</strong> $<?php echo htmlspecialchars($post['price']); ?>
+                </div>
+                <div class="text-gray-700 mb-2">
+                    <strong>Rooms:</strong> <?php echo htmlspecialchars($post['rooms']); ?>
+                </div>
+                <div class="text-gray-700">
+                    <strong>Created At:</strong> <?php echo htmlspecialchars($post['created_at']); ?>
                 </div>
             </div>
-        </div>
-
-        <!-- Post 2 -->
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-            <img src="https://via.placeholder.com/150" alt="Post Image" class="w-full h-48 object-cover rounded-t-lg">
-            <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">Post Title 2</h2>
-                <p class="text-gray-700">Short description of the post goes here...</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-gray-900 font-bold">$250</span>
-                    <a href="#" class="text-blue-500 hover:underline">View Details</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Post 3 -->
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-            <img src="https://via.placeholder.com/150" alt="Post Image" class="w-full h-48 object-cover rounded-t-lg">
-            <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">Post Title 3</h2>
-                <p class="text-gray-700">Short description of the post goes here...</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-gray-900 font-bold">$400</span>
-                    <a href="#" class="text-blue-500 hover:underline">View Details</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add more posts here -->
+        <?php endforeach; ?>
     </div>
 </div>
 </body>
-
 </html>
