@@ -101,6 +101,8 @@ class User
             $email    = $_POST['email'];
             $password = $_POST['password'];
 
+            $_SESSION['user'] = $email;
+
             $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();

@@ -23,6 +23,13 @@ $posts = $post->showPosts();
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-white font-bold text-lg">Home</a>
         <a href="/createAdsPage" class="text-white font-bold text-lg">Create New Ad</a>
+        <?php if(isset($_SESSION['user'])):   ?>
+        <form action="/logout" method="get">
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Logout
+            </button>
+        </form>
+        <?php endif;   ?>
     </div>
 </nav>
 
@@ -36,7 +43,7 @@ $posts = $post->showPosts();
 
     <div class="grid grid-cols-1 gap-6">
         <?php foreach ($posts as $post): ?>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="bg-white p-6 rounded-lg shadow-lg relative">
                 <h2 class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($post['title']); ?></h2>
                 <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($post['description']); ?></p>
                 <div class="text-gray-700 mb-2">
@@ -57,12 +64,15 @@ $posts = $post->showPosts();
                 <div class="text-gray-700 mb-2">
                     <strong>Rooms:</strong> <?php echo htmlspecialchars($post['rooms']); ?>
                 </div>
-                <div class="text-gray-700">
+                <div class="absolute bottom-0 left-0 right-0 text-center text-gray-700 p-4 opacity-70">
                     <strong>Created At:</strong> <?php echo htmlspecialchars($post['created_at']); ?>
                 </div>
+                <a href="?id=<?php echo htmlspecialchars($post['id']); ?>" class="absolute bottom-4 right-4 text-blue-500 hover:underline">
+                    View Post
+                </a>
             </div>
         <?php endforeach; ?>
     </div>
-</div>
+
 </body>
 </html>
