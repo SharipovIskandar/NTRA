@@ -40,7 +40,7 @@ CREATE TABLE `ads` (
   CONSTRAINT `ads_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`),
   CONSTRAINT `ads_status` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`),
   CONSTRAINT `ads_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `ads` (
 
 LOCK TABLES `ads` WRITE;
 /*!40000 ALTER TABLE `ads` DISABLE KEYS */;
-INSERT INTO `ads` VALUES (3,'4 Xonali uy','nimadurda',2,1,1,'Xorazim',12000,1,'2024-08-09 09:00:16');
+INSERT INTO `ads` VALUES (3,'4 Xonali uy','nimadurda',2,1,1,'Xorazim',12000,1,'2024-08-09 09:00:16'),(4,'eqwqwesfd','wiqjasfklmv.zx ',7,1,1,'esadfdv',12343300000000,2,'2024-08-11 13:44:05'),(5,'eqwqwesfd','wiqjasfklmv.zx ',7,1,1,'esadfdv',12343300000000,2,'2024-08-11 13:45:07');
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,9 +118,11 @@ CREATE TABLE `users` (
   `phone` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_phone` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +131,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'qwe','folbin','male','+9989148962','2024-08-09 08:45:11',NULL);
+INSERT INTO `users` VALUES (2,'qwe','folbin','male','+9989148962','2024-08-09 08:45:11',NULL,NULL,NULL),(3,'username1','position1','male','1234567890','2024-08-10 10:24:43','2024-08-10 10:24:43','email1@example.com','password1'),(4,'username2','position2','female','0987654321','2024-08-10 10:24:43','2024-08-10 10:24:43','email2@example.com','password2'),(5,'weqqqqq','ewqqqqqq','male','913243960','2024-08-10 17:23:01',NULL,'k@gmail.com','$2y$10$4i8TSbSCrFrA9GV1Hbs5Jeob2mQ7WzOreRLYlB6olxaQkckQP/WJu'),(7,'kimsanboy','kimdur','male','911516069','2024-08-10 17:28:08',NULL,'lolsol@gmail.com','123');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -142,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-09  9:15:12
+-- Dump completed on 2024-08-11 13:47:39
